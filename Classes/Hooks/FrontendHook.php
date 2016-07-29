@@ -41,6 +41,11 @@ class FrontendHook
     public function pageErrorHandler(&$params, \TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController &$obj)
     {
 
+        // Quickfix to avoid loops when wrong domain
+        if ( strpos($params['reasonText'], "unable to determine rootpage_id for the current domain") !== false) {
+            return $params['reasonText'];
+        }
+
         $currentUrl = $params['currentUrl'];
 
         $host = \TYPO3\CMS\Core\Utility\GeneralUtility::getIndpEnv('HTTP_HOST');
