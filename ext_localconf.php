@@ -4,9 +4,21 @@ if (!defined ('TYPO3_MODE')) {
 }
 
 //fix for error that sometimes appears with main page of translation
-if ($GLOBALS['TSFE']->rootLine[0]['uid'] == $GLOBALS['TSFE']->id){
-  $_GET['tx_realurl404multilingual'] = 0;
+//if we have only 4 symbols in request URI and they're finished wth slash
+if (strlen($_SERVER['REQUEST_URI']) == 4 && substr($_SERVER['REQUEST_URI'], -1) == '/'){
+  //compare each configured language with value of request URI
+  foreach ($TYPO3_CONF_VARS['EXTCONF']['realurl']['_DEFAULT']['preVars']['language']['valueMap'] as $lang => $id){
+    if (strpos($_SERVER['REQUEST_URI'], '/'.$lang.'/') !== false){
+      //$_GET['tx_realurl404multilingual'] = 0;
+      $useHook = false;
+    } else {
+      $useHook = true;
+    }
+  }
 } else {
+  $useHook = true;
+}
+if ($useHook){
   $TYPO3_CONF_VARS['FE']['pageNotFound_handling'] = 'USER_FUNCTION:EXT:'.$_EXTKEY.'/Classes/Hooks/FrontendHook.php:WapplerSystems\\Realurl404Multilingual\\Hooks\\FrontendHook->pageErrorHandler';
 }
 
