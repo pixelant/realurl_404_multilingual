@@ -321,6 +321,15 @@ class FrontendHook
                 curl_setopt($ch, CURLOPT_PROXYUSERPWD, $GLOBALS['TYPO3_CONF_VARS']['SYS']['curlProxyUserPass']);
             }
             $urlContent = curl_exec($ch);
+            $response = curl_getinfo( $ch );
+            
+            // in case if redirect
+            if ($response['http_code'] == 301 || $response['http_code'] == 302)
+            {
+                curl_setopt($ch, CURLOPT_URL, $response['redirect_url']);
+                $urlContent = curl_exec($ch);
+            }
+
             curl_close($ch);
 
 
