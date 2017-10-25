@@ -131,13 +131,11 @@ class FrontendHook
                 HttpUtility::redirect($destinationUrl, HttpUtility::HTTP_STATUS_301);
                 break;
             default:
-                if(self::MODE_FIRST_DOMAIN == $extConf['firstDomain'] && !$this->hostEqualFirstDomain())
-                {
+                if (self::MODE_FIRST_DOMAIN == $extConf['firstDomain'] && !$this->hostEqualFirstDomain()) {
                     $destinationUrl = $this->getDestinationUrl('', $this->getUri($currentUrl), $extConf, TRUE);
                     HttpUtility::redirect($destinationUrl, HttpUtility::HTTP_STATUS_301);
-                }else
-                {
-                    $this->getPageAndDisplay($destinationUrl, ($statusCode ? $statusCode : "HTTP/1.0 404 Not Found"));
+                } else {
+                    $this->getPageAndDisplay($destinationUrl, ($statusCode ? $statusCode : 'HTTP/1.0 404 Not Found'));
                 }
                 break;
         }
@@ -239,8 +237,7 @@ class FrontendHook
         $firstDomain = \TYPO3\CMS\Backend\Utility\BackendUtility::firstDomainRecord($rootLine);
         
         // Change host to first domain record if 'firstDomain' flag is set
-        if(self::MODE_FIRST_DOMAIN == $extConf['firstDomain'] && $useFirstDomain)
-        {   
+        if (self::MODE_FIRST_DOMAIN == $extConf['firstDomain'] && $useFirstDomain) {
             $host = $firstDomain;
         }
 
