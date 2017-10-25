@@ -14,6 +14,15 @@
             <trans-unit id="extconf.modeType2">
                 <source>Redirect</source>
             </trans-unit>
+            <trans-unit id="extconf.firstDomainTitle">
+                <source>Use first domain record for all 404 pages</source>
+            </trans-unit>
+            <trans-unit id="extconf.firstDomainType1">
+                <source>No</source>
+            </trans-unit>
+            <trans-unit id="extconf.firstDomainType2">
+                <source>Yes</source>
+            </trans-unit>
         </body>
     </file>
 </xliff>
